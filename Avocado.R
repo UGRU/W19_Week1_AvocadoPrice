@@ -56,7 +56,17 @@ p1 = ggplot(data = data, aes(x = TOTAL_VOLUME, y = AVERAGE_PRICE))+  ## First st
   theme(panel.grid.major = element_blank(), ## Get the trash gridlines out of here, gets rid of major grid lines
         panel.grid.minor = element_blank(), ## Gets rid of the minor grid lines
         axis.text = element_text(size = 6)) ## Increases the text size
-
+####
+#This little bit puts the months in the proper order on the x axis
+####
+#pull out the relevant columns, note the month is turned into a numeric
+mon_data = data.frame(MONTH= as.numeric(data$MONTH), MONTHNAME = data$MONTHNAME)
+#just the unique columns
+mon_data = unique(mon_data)
+#order based on the month values
+mon_data = mon_data[order(mon_data$MONTH),]
+#change the factor order of the original dataframe based on the sorted values.
+data$MONTHNAME = factor(data$MONTHNAME, as.character(mon_data$MONTHNAME) )
 
 ## Making fancy violin plots
 ## These are the best plots ever and should be used constantly (my opinion)
